@@ -2,11 +2,11 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { MoveRight, Menu } from "lucide-react";
 
-const Header = () => {
+const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
-    <nav className="sticky">
+    <nav className="sticky bg-white opacity-[.95] top-0 z-50 shadow-md">
       <div className="flex items-center justify-between px-2 md:px-6 lg:px-8 xl:px-12 py-2 bg-white">
         <div className="flex items-center font-semibold">
           <p>DocPilot</p>
@@ -18,9 +18,13 @@ const Header = () => {
           </Button>
         </div>
 
-        <div className="hidden sm:flex items-center sm:gap-4 md:gap-6 lg:gap-8 xl:gap-10 font-semibold">
-          <p>Pricing</p>
-          <p>Sign In</p>
+        <div className="hidden sm:flex items-center gap-4 font-semibold">
+          <Button variant="secondary">
+            <div>Pricing</div>
+          </Button>
+          <Button variant="secondary">
+            <div>Sign in</div>
+          </Button>
           <Button className="bg-[#ef4444]">
             <div className="flex items-center gap-2">
               <span>Get Started</span>
@@ -35,4 +39,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Navbar;
