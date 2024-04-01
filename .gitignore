@@ -27,4 +27,4 @@ DocPilot-server/node_modules
 
 # environment variables
 .env
-DocPilot-server\.env
+DocPilot-server/.env
