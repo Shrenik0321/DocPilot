@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { MoveRight, Menu } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
 
   return (
@@ -22,7 +24,7 @@ const Navbar = () => {
           <Button variant="secondary">
             <div>Pricing</div>
           </Button>
-          <Button variant="secondary">
+          <Button variant="secondary" onClick={() => navigate("/sign-in")}>
             <div>Sign in</div>
           </Button>
           <Button className="bg-[#ef4444]">
