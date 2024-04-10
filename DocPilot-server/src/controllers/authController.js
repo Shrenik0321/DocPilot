@@ -33,7 +33,13 @@ export const loginUserController = async (req, res) => {
     const { statusCode, message, data } = await loginUserService(userToLogin);
     if (statusCode === 200) {
       generateToken({ res, userId: data._doc._id });
-      return res.status(statusCode).json({ message, data });
+
+      const modifiedData = {
+        name: data._doc.name,
+        email: data._doc.email,
+      };
+
+      return res.status(statusCode).json({ message, data: modifiedData });
     } else {
       return res.status(statusCode).json({ message });
     }
