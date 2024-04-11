@@ -3,6 +3,7 @@ import SignIn from "./pages/SignIn/SignIn";
 import SignUp from "./pages/SignUp/SignUp";
 import Home from "./pages/Home/Home";
 import Layout from "./components/Layout/Layout";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (

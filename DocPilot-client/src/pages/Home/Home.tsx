@@ -1,7 +1,15 @@
 import { Button, buttonVariants } from "@/components/ui/button";
 import { MoveRight } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import React from "react";
 
 const Home = () => {
+  const { authUser } = useAuth();
+
+  React.useEffect(() => {
+    console.log(authUser);
+  }, [authUser]);
+
   return (
     <div className="pt-20 flex flex-col px-8">
       <div className="mb-10 text-center">
@@ -14,8 +22,8 @@ const Home = () => {
 
         <div className="my-5 flex justify-center">
           <p className="text-gray-500 max-w-[500px] md:max-w-[600px] lg:max-w-[700px] xl:max-w-[800px] font-semibold text-sm md:text-md lg:text-lg xl:text-xl">
-            Quill allows you to have conversations with any PDF document. Simply
-            upload your file and start asking questions right away.
+            DocPilot allows you to have conversations with any PDF document.
+            Simply upload your file and start asking questions right away.
           </p>
         </div>
 
@@ -79,8 +87,8 @@ const Home = () => {
               Starting asking questions
             </h1>
             <p className="text-gray-500 mt-2">
-              It&apos;s that simple. Try out Quill today - it really takes less
-              than a minute.
+              It&apos;s that simple. Try out DocPilot today - it really takes
+              less than a minute.
             </p>
           </div>
         </div>
