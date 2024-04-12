@@ -15,8 +15,10 @@ import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 // import Loader from "@/components/Loader/Loader";
+import Cookies from "universal-cookie";
 
 const SignIn = () => {
+  const cookies = new Cookies();
   // const [isLoading, setIsLoading] = React.useState(false);
   const navigate = useNavigate();
   const {
@@ -32,7 +34,7 @@ const SignIn = () => {
     try {
       const response = await userLogin(data);
       if (response) {
-        // setIsLoading(false);
+        cookies.set("jwt", response.data.token);
         toast.success(`User login successful!`, {
           autoClose: 2000,
           onClose: () => {
