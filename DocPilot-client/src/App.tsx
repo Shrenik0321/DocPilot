@@ -4,9 +4,11 @@ import SignUp from "./pages/SignUp/SignUp";
 import Home from "./pages/Home/Home";
 import Layout from "./components/Layout/Layout";
 import "react-toastify/dist/ReactToastify.css";
-import GetStarted from "./pages/GetStarted/GetStarted";
+import Dashboard from "./pages/Dashboard/Dashboard";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import Unauthorised from "./components/Unauthorised/Unauthorised";
+import Pricing from "./pages/Pricing/Pricing";
+import Chat from "./pages/Chat/Chat";
 
 function App() {
   return (
@@ -16,6 +18,7 @@ function App() {
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/unauthorised" element={<Unauthorised />} />
+        <Route path="/pricing" element={<Pricing />} />
 
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Home />} />
@@ -23,7 +26,10 @@ function App() {
 
         {/* Private Routes */}
         <Route element={<PrivateRoute />}>
-          <Route path="/get-started" element={<GetStarted />} />
+          <Route path="/" element={<Layout />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/chat" element={<Chat />} />
+          </Route>
         </Route>
       </Routes>
     </div>

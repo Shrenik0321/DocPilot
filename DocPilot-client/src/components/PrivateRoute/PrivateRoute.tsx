@@ -1,12 +1,10 @@
 import { useLocation, Navigate, Outlet } from "react-router-dom";
-import Cookies from "universal-cookie";
 
 const PrivateRoute = () => {
-  const cookies = new Cookies();
-  const token = cookies.get("jwt");
+  const user = localStorage.getItem("user");
   const location = useLocation();
 
-  return token ? (
+  return user ? (
     <Outlet />
   ) : (
     <Navigate to="/unauthorised" state={{ from: location }} replace />

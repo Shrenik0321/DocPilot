@@ -1,20 +1,7 @@
 import { Button, buttonVariants } from "@/components/ui/button";
 import { MoveRight } from "lucide-react";
-import { useAuth } from "@/hooks/useAuth";
-import React from "react";
-import Cookies from "universal-cookie";
 
 const Home = () => {
-  const { authUser } = useAuth();
-  const cookies = new Cookies();
-  const token = cookies.get("jwt");
-
-  React.useEffect(() => {
-    console.log(authUser);
-  }, [authUser]);
-
-  console.log(token);
-
   return (
     <div className="pt-20 flex flex-col px-8">
       <div className="mb-10 text-center">
