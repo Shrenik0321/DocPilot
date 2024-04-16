@@ -4,6 +4,7 @@ import { SERVER_PORT } from "./config/envConfig.js";
 import connectDb from "./config/dbConfig.js";
 import auth from "./routes/authRoute.js";
 import user from "./routes/userRoute.js";
+import file from "./routes/fileUploadPipelineRoute.js";
 import {
   notFound,
   errorHandler,
@@ -34,6 +35,7 @@ app.use(cors(corsOptions));
 // Defninig Routes
 app.use("/api/auth", auth);
 app.use("/api/user", user);
+app.use("/api/files", file);
 
 // Global Error Handling
 app.use(notFound);

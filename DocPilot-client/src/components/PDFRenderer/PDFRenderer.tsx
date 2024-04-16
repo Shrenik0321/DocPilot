@@ -7,7 +7,7 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { useResizeDetector } from "react-resize-detector";
 
-const PDFRenderer = () => {
+const PDFRenderer = ({ pdfData }: any) => {
   const [numPages, setNumPages] = React.useState<number>(1);
   const [currentPage, setCurrentPage] = React.useState<any>(null);
 
@@ -81,6 +81,7 @@ const PDFRenderer = () => {
           style={{ scrollbarWidth: "thin" }}
         >
           <Document
+            renderMode="canvas"
             loading={
               <div>
                 <Loader className="my-24 h-6 w-6 animate-spin" />
@@ -89,7 +90,7 @@ const PDFRenderer = () => {
             onLoadError={() => {
               console.log("Error loading pdf");
             }}
-            file="DOC-20231121-WA0003..pdf"
+            file={pdfData.fileUrl}
             onLoadSuccess={onDocumentLoadSuccess}
           >
             <Page
