@@ -21,6 +21,7 @@ const PDFRenderer = () => {
   function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
     setNumPages(numPages);
   }
+
   return (
     <div className="w-full bg-white rounded-md shadow flex flex-col items-center">
       <div className="h-14 w-full border-zinc-200 flex items-center justify-between">

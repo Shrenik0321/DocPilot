@@ -1,5 +1,5 @@
 import React from "react";
-import { Cloud, File, Ghost, LoaderCircle, X } from "lucide-react";
+import { Cloud, File, Ghost, X } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -32,7 +32,7 @@ const UploadDropzone = () => {
   return (
     <Dropzone
       multiple={false}
-      onDrop={async (acceptedFiles) => {
+      onDrop={async (_acceptedFiles) => {
         setIsUploading(true);
         const progressInterval = progressFunc();
 

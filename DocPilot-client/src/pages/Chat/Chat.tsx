@@ -1,5 +1,5 @@
 import PDFRenderer from "@/components/PDFRenderer/PDFRenderer";
-import ChatWrapper from "@/components/ChatWrapper/ChatWrapper";
+import ChatInterface from "@/components/ChatInterface/ChatInterface";
 
 const Chat = () => {
   return (
@@ -8,7 +8,7 @@ const Chat = () => {
         <PDFRenderer />
       </div>
       <div>
-        <ChatWrapper />
+        <ChatInterface />
       </div>
     </div>
   );
