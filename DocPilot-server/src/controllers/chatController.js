@@ -2,7 +2,7 @@ import { openai } from "../config/openAiConfig.js";
 
 export const chatController = async (req, res) => {
   try {
-    const { content } = req.body;
+    const { user, content } = req.body;
 
     const completion = await openai.chat.completions.create({
       messages: [{ role: "system", content: content }],

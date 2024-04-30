@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Send } from "lucide-react";
+import { Send, Loader } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -11,60 +11,48 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { chatApi } from "@/api/chatApi";
 
 function ChatWrapper() {
-  const [messages, setMessages] = React.useState([
-    {
-      role: "agent",
-      content: "Hi, how can I help you today?",
-    },
-    {
-      role: "user",
-      content: "Hey, I'm having trouble with my account.",
-    },
-    {
-      role: "agent",
-      content: "What seems to be the problem?",
-    },
-    {
-      role: "user",
-      content: "I can't log in.",
-    },
-    {
-      role: "agent",
-      content: "Hi, how can I help you today?",
-    },
-    {
-      role: "user",
-      content: "Hey, I'm having trouble with my account.",
-    },
-    {
-      role: "agent",
-      content: "What seems to be the problem?",
-    },
-    {
-      role: "user",
-      content: "I can't log in.",
-    },
-    {
-      role: "agent",
-      content: "Hi, how can I help you today?",
-    },
-    {
-      role: "user",
-      content: "Hey, I'm having trouble with my account.",
-    },
-    {
-      role: "agent",
-      content: "What seems to be the problem?",
-    },
-    {
-      role: "user",
-      content: "I can't log in.",
-    },
-  ]);
+  const [messages, setMessages] = React.useState<any>([]);
   const [input, setInput] = React.useState("");
+  const [shouldUpdateMessages, setShouldUpdateMessages] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+
   const inputLength = input.trim().length;
+
+  const handleMessageSend = (event: any) => {
+    event.preventDefault();
+    if (inputLength === 0) return;
+
+    setMessages([
+      ...messages,
+      {
+        role: "user",
+        content: input,
+      },
+    ]);
+
+    setInput("");
+    setShouldUpdateMessages(true);
+  };
+
+  const messageChatApi = async () => {
+    setLoading(true);
+    const response: any = await chatApi(messages[messages.length - 1]);
+    if (response && response.responseMessage) {
+      setMessages([...messages, response.responseMessage]);
+      setShouldUpdateMessages(false);
+    }
+
+    setLoading(false);
+  };
+
+  React.useEffect(() => {
+    if (messages.length > 0 && shouldUpdateMessages) {
+      messageChatApi();
+    }
+  }, [messages, shouldUpdateMessages]);
 
   return (
     <div>
@@ -81,6 +69,7 @@ function ChatWrapper() {
             </div>
           </div>
         </CardHeader>
+
         <CardContent
           className="overflow-y-auto max-h-80"
           style={{
@@ -90,7 +79,7 @@ function ChatWrapper() {
           }}
         >
           <div className="space-y-4">
-            {messages.map((message, index) => (
+            {messages.map((message: any, index: number) => (
               <div
                 key={index}
                 className={cn(
@@ -103,23 +92,17 @@ function ChatWrapper() {
                 {message.content}
               </div>
             ))}
+            {loading && shouldUpdateMessages && (
+              <div className="flex justify-center mt-4">
+                <Loader className="h-6 w-6 animate-spin" />
+              </div>
+            )}
           </div>
         </CardContent>
 
         <CardFooter>
           <form
-            onSubmit={(event) => {
-              event.preventDefault();
-              if (inputLength === 0) return;
-              setMessages([
-                ...messages,
-                {
-                  role: "user",
-                  content: input,
-                },
-              ]);
-              setInput("");
-            }}
+            onSubmit={handleMessageSend}
             className="flex w-full items-center space-x-2"
           >
             <Input
