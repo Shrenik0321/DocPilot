@@ -5,6 +5,7 @@ import connectDb from "./config/dbConfig.js";
 import auth from "./routes/authRoute.js";
 import user from "./routes/userRoute.js";
 import file from "./routes/fileUploadPipelineRoute.js";
+import chat from "./routes/chatRoute.js";
 import {
   notFound,
   errorHandler,
@@ -36,6 +37,7 @@ app.use(cors(corsOptions));
 app.use("/api/auth", auth);
 app.use("/api/user", user);
 app.use("/api/files", file);
+app.use("/api/open-ai", chat);
 
 // Global Error Handling
 app.use(notFound);
