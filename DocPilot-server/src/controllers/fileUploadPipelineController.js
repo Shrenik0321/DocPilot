@@ -11,6 +11,7 @@ import {
   AWS_SECRET_ACCESS_KEY,
 } from "../config/envConfig.js";
 import { fileUploadPipelineService } from "../services/fileUploadPipelineService.js";
+import { vectorisePdfDataFunc } from "../utils/utilities.js";
 
 const s3 = new S3Client({
   credentials: {
@@ -41,16 +42,18 @@ export const fileUploadController = async (req, res) => {
         Key: fileUploadName,
       };
 
-      const command = new GetObjectCommand(getObjectParams, {
-        expiresIn: 365 * 24 * 60 * 60,
-      });
+      const command = new GetObjectCommand(getObjectParams);
 
-      const fileUploadUrl = await getSignedUrl(s3, command);
+      const fileUploadUrl = await getSignedUrl(s3, command, {
+        expiresIn: 7 * 24 * 60 * 60,
+      });
 
       const { statusCode, message, post } = await fileUploadPipelineService({
         fileUploadName,
         fileUploadUrl,
       });
+
+      vectorisePdfDataFunc(fileUploadUrl);
 
       return res.status(statusCode).json({ message: message, data: post });
     }
