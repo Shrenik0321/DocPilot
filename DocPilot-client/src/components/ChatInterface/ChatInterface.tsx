@@ -38,7 +38,8 @@ function ChatWrapper() {
 
   const messageChatApi = async () => {
     setLoading(true);
-    const response: any = await chatApi(messages[messages.length - 1]);
+    // const response: any = await chatApi(messages[messages.length - 1]);
+    const response: any = await chatApi(messages);
     if (response && response.responseMessage) {
       setMessages([...messages, response.responseMessage]);
       setShouldUpdateMessages(false);

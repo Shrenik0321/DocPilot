@@ -11,7 +11,7 @@ import {
   AWS_SECRET_ACCESS_KEY,
 } from "../config/envConfig.js";
 import { fileUploadPipelineService } from "../services/fileUploadPipelineService.js";
-import { vectorisePdfDataFunc } from "../utils/utilities.js";
+import { vectorisePdfDataFunc } from "../utils/vectorisePdfData.js";
 
 const s3 = new S3Client({
   credentials: {
