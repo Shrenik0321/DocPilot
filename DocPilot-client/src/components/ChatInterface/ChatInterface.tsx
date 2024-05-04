@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Send, Loader } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,9 +10,22 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { chatApi } from "@/api/chatApi";
+import { BotMessageSquare } from "lucide-react";
+import { User } from "lucide-react";
 
 function ChatWrapper() {
-  const [messages, setMessages] = React.useState<any>([]);
+  const [messages, setMessages] = React.useState<any>([
+    {
+      role: "user",
+      content: "Hey",
+      time: "2:53pm",
+    },
+    {
+      role: "assistant",
+      content: "Hellllooo",
+      time: "2:53pm",
+    },
+  ]);
   const [input, setInput] = React.useState("");
   const [shouldUpdateMessages, setShouldUpdateMessages] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
@@ -29,6 +41,7 @@ function ChatWrapper() {
       {
         role: "user",
         content: input,
+        time: getCurrentTime(),
       },
     ]);
 
@@ -46,6 +59,24 @@ function ChatWrapper() {
     }
 
     setLoading(false);
+  };
+
+  const getCurrentTime = () => {
+    let currentTime = new Date();
+    let hours: any = currentTime.getHours();
+    let minutes: any = currentTime.getMinutes();
+    let ampm: any = hours >= 12 ? "pm" : "am";
+
+    // Convert hours from 24-hour format to 12-hour format
+    hours = hours % 12;
+    hours = hours ? hours : 12; // Handle midnight (0 hours)
+
+    // Add leading zero to minutes if needed
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+
+    // Construct the formatted time string
+    let timeString = hours + ":" + minutes + ampm;
+    return timeString;
   };
 
   React.useEffect(() => {
@@ -81,17 +112,39 @@ function ChatWrapper() {
           <div className="space-y-4">
             {messages.map((message: any, index: number) => (
               <div
+                className={`flex flex-col gap-2 py-2 text-sm ${
+                  message.role === "user" ? "items-end" : "items-start"
+                }`}
                 key={index}
-                className={cn(
-                  "flex w-max max-w-[75%] flex-col gap-2 rounded-lg px-3 py-2 text-sm",
-                  message.role === "user"
-                    ? "ml-auto bg-primary text-primary-foreground"
-                    : "bg-muted"
-                )}
               >
-                {message.content}
+                {message.role === "user" ? (
+                  <div className="flex flex-row-reverse items-end gap-1">
+                    <div className="bg-[#ef4444] w-6 h-6 flex items-center justify-center rounded-sm">
+                      <User className="h-4 w-4 text-white" />
+                    </div>
+                    <div className="self-end ml-auto rounded-tl-lg rounded-tr-lg rounded-bl-lg rounded-br-none bg-[#ef4444] text-primary-foreground p-2">
+                      <div className="text-left pb-3">{message.content}</div>
+                      <div className="text-xs text-primary-foreground opacity-50 text-right">
+                        {message.time}
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex flex-row items-end gap-1">
+                    <div className="bg-[#52525b] w-6 h-6 flex items-center justify-center rounded-sm">
+                      <BotMessageSquare className="h-4 w-4 text-white" />
+                    </div>
+                    <div className="rounded-tl-lg rounded-tr-lg rounded-br-lg rounded-bl-none bg-muted p-2">
+                      <div className="text-right pb-3">{message.content}</div>
+                      <div className="text-xs text-primary-foreground opacity-50 text-left text-black">
+                        {message.time}
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
+
             {loading && shouldUpdateMessages && (
               <div className="flex justify-center mt-4">
                 <Loader className="h-6 w-6 animate-spin" />
@@ -113,7 +166,12 @@ function ChatWrapper() {
               value={input}
               onChange={(event) => setInput(event.target.value)}
             />
-            <Button type="submit" size="icon" disabled={inputLength === 0}>
+            <Button
+              type="submit"
+              size="icon"
+              disabled={inputLength === 0}
+              className="bg-[#ef4444]"
+            >
               <Send className="h-4 w-4" />
               <span className="sr-only">Send</span>
             </Button>
