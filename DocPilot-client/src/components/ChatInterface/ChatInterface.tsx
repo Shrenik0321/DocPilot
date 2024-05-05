@@ -14,18 +14,7 @@ import { BotMessageSquare } from "lucide-react";
 import { User } from "lucide-react";
 
 function ChatWrapper() {
-  const [messages, setMessages] = React.useState<any>([
-    {
-      role: "user",
-      content: "Hey",
-      time: "2:53pm",
-    },
-    {
-      role: "assistant",
-      content: "Hellllooo",
-      time: "2:53pm",
-    },
-  ]);
+  const [messages, setMessages] = React.useState<any>([]);
   const [input, setInput] = React.useState("");
   const [shouldUpdateMessages, setShouldUpdateMessages] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
@@ -86,99 +75,97 @@ function ChatWrapper() {
   }, [messages, shouldUpdateMessages]);
 
   return (
-    <div>
-      <Card>
-        <CardHeader className="flex flex-row items-center">
-          <div className="flex items-center space-x-4">
-            <Avatar>
-              <AvatarImage src="/avatars/01.png" alt="Image" />
-              <AvatarFallback>DP</AvatarFallback>
-            </Avatar>
-            <div>
-              <p className="text-sm font-medium leading-none">DocPilot</p>
-              <p className="text-sm text-muted-foreground">m@example.com</p>
-            </div>
+    <Card className="flex flex-col h-full justify-between">
+      <CardHeader className="flex flex-row items-center">
+        <div className="flex items-center space-x-4">
+          <Avatar>
+            <AvatarImage src="/avatars/01.png" alt="Image" />
+            <AvatarFallback>DP</AvatarFallback>
+          </Avatar>
+          <div>
+            <p className="text-sm font-medium leading-none">DocPilot</p>
+            <p className="text-sm text-muted-foreground">m@example.com</p>
           </div>
-        </CardHeader>
+        </div>
+      </CardHeader>
 
-        <CardContent
-          className="overflow-y-auto max-h-80"
-          style={{
-            WebkitOverflowScrolling: "touch",
-            scrollbarWidth: "none",
-            msOverflowStyle: "none",
-          }}
-        >
-          <div className="space-y-4">
-            {messages.map((message: any, index: number) => (
-              <div
-                className={`flex flex-col gap-2 py-2 text-sm ${
-                  message.role === "user" ? "items-end" : "items-start"
-                }`}
-                key={index}
-              >
-                {message.role === "user" ? (
-                  <div className="flex flex-row-reverse items-end gap-1">
-                    <div className="bg-[#ef4444] w-6 h-6 flex items-center justify-center rounded-sm">
-                      <User className="h-4 w-4 text-white" />
-                    </div>
-                    <div className="self-end ml-auto rounded-tl-lg rounded-tr-lg rounded-bl-lg rounded-br-none bg-[#ef4444] text-primary-foreground p-2">
-                      <div className="text-left pb-3">{message.content}</div>
-                      <div className="text-xs text-primary-foreground opacity-50 text-right">
-                        {message.time}
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="flex flex-row items-end gap-1">
-                    <div className="bg-[#52525b] w-6 h-6 flex items-center justify-center rounded-sm">
-                      <BotMessageSquare className="h-4 w-4 text-white" />
-                    </div>
-                    <div className="rounded-tl-lg rounded-tr-lg rounded-br-lg rounded-bl-none bg-muted p-2">
-                      <div className="text-right pb-3">{message.content}</div>
-                      <div className="text-xs text-primary-foreground opacity-50 text-left text-black">
-                        {message.time}
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            ))}
-
-            {loading && shouldUpdateMessages && (
-              <div className="flex justify-center mt-4">
-                <Loader className="h-6 w-6 animate-spin" />
-              </div>
-            )}
-          </div>
-        </CardContent>
-
-        <CardFooter>
-          <form
-            onSubmit={handleMessageSend}
-            className="flex w-full items-center space-x-2"
-          >
-            <Input
-              id="message"
-              placeholder="Type your message..."
-              className="flex-1"
-              autoComplete="off"
-              value={input}
-              onChange={(event) => setInput(event.target.value)}
-            />
-            <Button
-              type="submit"
-              size="icon"
-              disabled={inputLength === 0}
-              className="bg-[#ef4444]"
+      <CardContent
+        className="overflow-y-auto max-h-80"
+        style={{
+          WebkitOverflowScrolling: "touch",
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+        }}
+      >
+        <div className="space-y-4">
+          {messages.map((message: any, index: number) => (
+            <div
+              className={`flex flex-col gap-2 py-2 text-sm ${
+                message.role === "user" ? "items-end" : "items-start"
+              }`}
+              key={index}
             >
-              <Send className="h-4 w-4" />
-              <span className="sr-only">Send</span>
-            </Button>
-          </form>
-        </CardFooter>
-      </Card>
-    </div>
+              {message.role === "user" ? (
+                <div className="flex flex-row-reverse items-end gap-1">
+                  <div className="bg-[#ef4444] w-6 h-6 flex items-center justify-center rounded-sm">
+                    <User className="h-4 w-4 text-white" />
+                  </div>
+                  <div className="self-end ml-auto rounded-tl-lg rounded-tr-lg rounded-bl-lg rounded-br-none bg-[#ef4444] text-primary-foreground p-2">
+                    <div className="text-left pb-3">{message.content}</div>
+                    <div className="text-xs text-primary-foreground opacity-50 text-right">
+                      {message.time}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex flex-row items-end gap-1">
+                  <div className="bg-[#52525b] w-6 h-6 flex items-center justify-center rounded-sm">
+                    <BotMessageSquare className="h-4 w-4 text-white" />
+                  </div>
+                  <div className="rounded-tl-lg rounded-tr-lg rounded-br-lg rounded-bl-none bg-muted p-2">
+                    <div className="text-right pb-3">{message.content}</div>
+                    <div className="text-xs text-primary-foreground opacity-50 text-left text-black">
+                      {message.time}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+
+          {loading && shouldUpdateMessages && (
+            <div className="flex justify-center mt-4">
+              <Loader className="h-6 w-6 animate-spin" />
+            </div>
+          )}
+        </div>
+      </CardContent>
+
+      <CardFooter>
+        <form
+          onSubmit={handleMessageSend}
+          className="flex w-full items-center space-x-2"
+        >
+          <Input
+            id="message"
+            placeholder="Type your message..."
+            className="flex-1"
+            autoComplete="off"
+            value={input}
+            onChange={(event) => setInput(event.target.value)}
+          />
+          <Button
+            type="submit"
+            size="icon"
+            disabled={inputLength === 0}
+            className="bg-[#ef4444]"
+          >
+            <Send className="h-4 w-4" />
+            <span className="sr-only">Send</span>
+          </Button>
+        </form>
+      </CardFooter>
+    </Card>
   );
 }
 
