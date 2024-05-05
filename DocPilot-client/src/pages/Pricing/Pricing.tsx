@@ -152,7 +152,7 @@ function Pricing() {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center p-8">
+    <div className="flex flex-col justify-center items-center p-6">
       <div className="flex flex-col items-center justify-center">
         <div className="text-4xl md:text-5xl lg:text-6xl mb-8">
           <h1 className="font-bold">Pricing</h1>
