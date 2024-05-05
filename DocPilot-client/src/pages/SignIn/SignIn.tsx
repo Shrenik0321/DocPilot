@@ -37,7 +37,7 @@ const SignIn = () => {
           autoClose: 2000,
           onClose: () => {
             dispatch({ type: "LOGIN", payload: response.data });
-            navigate("/");
+            navigate("/dashboard");
           },
         });
       }

@@ -1,7 +1,12 @@
 import { Button, buttonVariants } from "@/components/ui/button";
 import { MoveRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
+
+  let user: any = localStorage.getItem("user");
+
   return (
     <div className="pt-20 flex flex-col px-8">
       <div className="mb-10 text-center">
@@ -22,10 +27,14 @@ const Home = () => {
         <Button
           className={buttonVariants({
             size: "lg",
-            className: "bg-[#ef4444]",
+            className:
+              "bg-[#ef4444] hover:bg-[#ef4444] hover:text-lg hover:p-6",
           })}
         >
-          <div className="flex items-center justify-center gap-2">
+          <div
+            className="flex items-center justify-center gap-2"
+            onClick={() => navigate(user ? "/dashboard" : "/sign-in")}
+          >
             <span className="text-white">Get Started</span>
             <span>
               <MoveRight />
