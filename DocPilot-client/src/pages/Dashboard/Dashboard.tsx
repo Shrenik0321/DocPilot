@@ -34,11 +34,14 @@ const Dashboard = () => {
 
   return (
     <div>
-      <div className="py-10 flex flex-col px-20">
+      <div className="py-10 flex flex-col px-4 xs:px-6 sm:px-8 md:px-10 lg:px-12 xl:px-14">
         <div className="flex justify-between items-center">
           <div className="flex gap-2">
-            <FileText color="#52525b" size="38" />
-            <h1 className="font-bold text-[#52525b] text-xl md:text-2xl lg:text-3xl xl:text-4xl">
+            <FileText
+              color="#52525b"
+              className="size-7 xs:size-8 sm:size-9 md:size-10"
+            />
+            <h1 className="font-bold text-[#52525b] text-2xl xs:text-3xl sm:text-4xl">
               My Files
             </h1>
           </div>
