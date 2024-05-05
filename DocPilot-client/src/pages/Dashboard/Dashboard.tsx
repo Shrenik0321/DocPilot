@@ -11,11 +11,11 @@ import { Button } from "@/components/ui/button";
 import UploadDropzone from "@/components/UploadDropzone/UploadDropzone";
 import { filterPosts } from "@/api/filterPosts";
 import Post from "@/components/Post/Post";
-import { useNavigate } from "react-router-dom";
+import { Plus } from "lucide-react";
+import { FileText } from "lucide-react";
 
 const Dashboard = () => {
   const [posts, setPosts] = React.useState([]);
-  const navigate = useNavigate();
 
   const fetchPosts = async () => {
     try {
@@ -36,17 +36,25 @@ const Dashboard = () => {
     <div>
       <div className="py-10 flex flex-col px-20">
         <div className="flex justify-between items-center">
-          <h1 className="font-bold  text-xl md:text-2xl lg:text-3xl xl:text-4xl">
-            My Files
-          </h1>
+          <div className="flex gap-2">
+            <FileText color="#52525b" size="38" />
+            <h1 className="font-bold text-[#52525b] text-xl md:text-2xl lg:text-3xl xl:text-4xl">
+              My Files
+            </h1>
+          </div>
           <div>
             <AlertDialog>
               <AlertDialogTrigger asChild>
                 <Button
-                  className="bg-[#ef4444] text-white font-bold p-2 rounded"
+                  className="bg-[#f85f5f] text-white font-bold p-2 rounded hover:bg-[#ef4444] hover:text-white"
                   variant="outline"
                 >
-                  Upload PDF
+                  <div className="flex items-center justify-center gap-2">
+                    <span>
+                      <Plus size="20" />
+                    </span>
+                    <span>Upload PDF</span>
+                  </div>
                 </Button>
               </AlertDialogTrigger>
               <AlertDialogContent className="p-2 flex flex-col">
@@ -72,7 +80,7 @@ const Dashboard = () => {
       ) : (
         <div className="grid grid-cols-3 gap-4 px-20">
           {posts.map((post, index) => (
-            <div onClick={() => navigate("/chat", { state: { data: post } })}>
+            <div>
               <Post key={index} post={post} />
             </div>
           ))}
