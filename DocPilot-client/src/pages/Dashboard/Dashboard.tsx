@@ -33,8 +33,8 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div>
-      <div className="py-10 flex flex-col px-4 xs:px-6 sm:px-8 md:px-10 lg:px-12 xl:px-14">
+    <div className="mx-4 xs:mx-6 sm:mx-8 md:mx-10 lg:mx-12 xl:mx-14">
+      <div className="py-10 flex flex-col">
         <div className="flex justify-between items-center">
           <div className="flex gap-2">
             <FileText
@@ -81,9 +81,9 @@ const Dashboard = () => {
           </div>
         </>
       ) : (
-        <div className="grid grid-cols-3 gap-4 px-20">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {posts.map((post, index) => (
-            <div>
+            <div className="w-full">
               <Post key={index} post={post} />
             </div>
           ))}
