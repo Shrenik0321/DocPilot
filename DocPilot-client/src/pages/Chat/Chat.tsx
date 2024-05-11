@@ -7,7 +7,7 @@ const Chat = () => {
   const pdfData = location.state?.data;
 
   return (
-    <div className="grid grid-cols-2 gap-4 p-6">
+    <div className="grid md:grid-cols-2 gap-4 p-6">
       <div>
         <PDFRenderer pdfData={pdfData} />
       </div>
