@@ -17,16 +17,10 @@ export const vectorisePdfDataFunc = async (fileUrl) => {
       openAIApiKey: OPEN_AI_API_KEY,
     });
 
-    const vectorStore = await PineconeStore.fromDocuments(
-      pageLevelDocs,
-      embeddings,
-      {
-        pineconeIndex,
-        maxConcurrency: 5,
-      }
-    );
-
-    console.log(vectorStore);
+    await PineconeStore.fromDocuments(pageLevelDocs, embeddings, {
+      pineconeIndex,
+      maxConcurrency: 5,
+    });
   } catch (err) {
     console.log(err);
   }

@@ -3,21 +3,37 @@ import Users from "../models/userModel.js";
 import { ACCESS_TOKEN } from "../config/envConfig.js";
 
 const requireAuth = async (req, res, next) => {
-  let token;
-  token = req.cookies.jwt;
+  try {
+    const authHeader = req.headers.Authorization || req.headers.authorization;
 
-  if (token) {
-    try {
-      const decoded = jwt.verify(token, ACCESS_TOKEN);
-
-      req.user = await Users.findById(decoded.userId).select("-password");
-
-      next();
-    } catch (err) {
-      console.log(err);
+    if (!authHeader?.startsWith("Bearer ")) {
+      return res.status(401).json({ error: "Unauthorised" });
     }
-  } else {
-    res.status(401).json({ message: "Not Authorised, Invalid token" });
+    const token = authHeader.split(" ")[1];
+
+    if (!token) {
+      return res.status(401).json({ error: "No token provided" });
+    }
+
+    const decoded = jwt.verify(token, ACCESS_TOKEN);
+
+    if (decoded.exp && Date.now() > decoded.exp * 1000) {
+      return res
+        .status(401)
+        .json({ error: "Token expired, please log in again" });
+    }
+
+    const user = await Users.findById(decoded.userId).select("-password");
+
+    req.user = user;
+    next();
+  } catch (err) {
+    if (err instanceof jwt.JsonWebTokenError) {
+      return res.status(401).json({ error: "Invalid token signature" });
+    } else {
+      console.log(err);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
   }
 };
 

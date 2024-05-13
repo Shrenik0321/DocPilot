@@ -122,8 +122,8 @@ function ChatWrapper() {
                     <BotMessageSquare className="h-4 w-4 text-white" />
                   </div>
                   <div className="rounded-tl-lg rounded-tr-lg rounded-br-lg rounded-bl-none bg-muted p-2">
-                    <div className="text-right pb-3">{message.content}</div>
-                    <div className="text-xs text-primary-foreground opacity-50 text-left text-black">
+                    <div className="text-left pb-3">{message.content}</div>
+                    <div className="text-xs text-primary-foreground opacity-50 text-right">
                       {message.time}
                     </div>
                   </div>

@@ -20,7 +20,10 @@ const Post = ({ post }: any) => {
 
   const handleDelete = () => {
     const { _id } = post;
-    deletePost({ postId: _id });
+    const response: any = deletePost({ postId: _id });
+    if (response) {
+      window.location.reload();
+    }
   };
 
   return (
