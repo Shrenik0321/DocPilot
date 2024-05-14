@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { chatApi } from "@/api/chatApi";
 import { BotMessageSquare } from "lucide-react";
 import { User } from "lucide-react";
+import { MessageSquare } from "lucide-react";
 
 function ChatWrapper() {
   const [messages, setMessages] = React.useState<any>([]);
@@ -88,57 +89,69 @@ function ChatWrapper() {
         </div>
       </CardHeader>
 
-      <CardContent
-        className="overflow-y-auto max-h-80"
-        style={{
-          WebkitOverflowScrolling: "touch",
-          scrollbarWidth: "none",
-          msOverflowStyle: "none",
-        }}
-      >
-        <div className="space-y-4">
-          {messages.map((message: any, index: number) => (
-            <div
-              className={`flex flex-col gap-2 py-2 text-sm ${
-                message.role === "user" ? "items-end" : "items-start"
-              }`}
-              key={index}
-            >
-              {message.role === "user" ? (
-                <div className="flex flex-row-reverse items-end gap-1">
-                  <div className="bg-[#ef4444] w-6 h-6 flex items-center justify-center rounded-sm">
-                    <User className="h-4 w-4 text-white" />
-                  </div>
-                  <div className="self-end ml-auto rounded-tl-lg rounded-tr-lg rounded-bl-lg rounded-br-none bg-[#ef4444] text-primary-foreground p-2">
-                    <div className="text-left pb-3">{message.content}</div>
-                    <div className="text-xs text-primary-foreground opacity-50 text-right">
-                      {message.time}
+      {messages.length > 0 ? (
+        <CardContent
+          className="overflow-y-auto max-h-80"
+          style={{
+            WebkitOverflowScrolling: "touch",
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+          }}
+        >
+          <div className="space-y-4">
+            {messages.map((message: any, index: number) => (
+              <div
+                className={`flex flex-col gap-2 py-2 text-sm ${
+                  message.role === "user" ? "items-end" : "items-start"
+                }`}
+                key={index}
+              >
+                {message.role === "user" ? (
+                  <div className="flex flex-row-reverse items-end gap-1">
+                    <div className="bg-[#ef4444] w-6 h-6 flex items-center justify-center rounded-sm">
+                      <User className="h-4 w-4 text-white" />
+                    </div>
+                    <div className="self-end ml-auto rounded-tl-lg rounded-tr-lg rounded-bl-lg rounded-br-none bg-[#ef4444] text-primary-foreground p-2">
+                      <div className="text-left pb-3">{message.content}</div>
+                      <div className="text-xs text-primary-foreground opacity-50 text-right">
+                        {message.time}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ) : (
-                <div className="flex flex-row items-end gap-1">
-                  <div className="bg-[#52525b] w-6 h-6 flex items-center justify-center rounded-sm">
-                    <BotMessageSquare className="h-4 w-4 text-white" />
-                  </div>
-                  <div className="rounded-tl-lg rounded-tr-lg rounded-br-lg rounded-bl-none bg-muted p-2">
-                    <div className="text-left pb-3">{message.content}</div>
-                    <div className="text-xs text-primary-foreground opacity-50 text-right">
-                      {message.time}
+                ) : (
+                  <div className="flex flex-row items-end gap-1">
+                    <div className="bg-[#52525b] w-6 h-6 flex items-center justify-center rounded-sm">
+                      <BotMessageSquare className="h-4 w-4 text-white" />
+                    </div>
+                    <div className="rounded-tl-lg rounded-tr-lg rounded-br-lg rounded-bl-none bg-muted p-2">
+                      <div className="text-left pb-3">{message.content}</div>
+                      <div className="text-xs text-primary-foreground opacity-50 text-right">
+                        {message.time}
+                      </div>
                     </div>
                   </div>
-                </div>
-              )}
-            </div>
-          ))}
+                )}
+              </div>
+            ))}
 
-          {loading && shouldUpdateMessages && (
-            <div className="flex justify-center mt-4">
-              <Loader className="h-6 w-6 animate-spin" />
+            {loading && shouldUpdateMessages && (
+              <div className="flex justify-center mt-4">
+                <Loader className="h-6 w-6 animate-spin" />
+              </div>
+            )}
+          </div>
+        </CardContent>
+      ) : (
+        <CardContent>
+          <div className="flex items-center justify-center">
+            <div className="flex flex-col items-center justify-center">
+              <MessageSquare size={28} color="#ef4444" />
+              <p className="font-semibold text-xl">You're all set!</p>
+              <p className="text-sm">Ask your first question to get started</p>
             </div>
-          )}
-        </div>
-      </CardContent>
+          </div>
+        </CardContent>
+      )}
 
       <CardFooter>
         <form

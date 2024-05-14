@@ -14,6 +14,12 @@ import { Minus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 function Pricing() {
+  let user: any = localStorage.getItem("user");
+
+  if (!null) {
+    user = JSON.parse(user);
+  }
+
   function FreeCard() {
     const navigate = useNavigate();
 
@@ -65,19 +71,24 @@ function Pricing() {
             </div>
           </div>
         </CardContent>
-        <CardFooter>
-          <Button className="w-full bg-[#e5e7eb] text-black hover:bg-[#d1d5db]">
-            <div
-              className="flex items-center justify-center gap-2"
-              onClick={() => navigate("/sign-up")}
-            >
-              <span>Sign Up</span>
-              <span>
-                <MoveRight />
-              </span>
-            </div>
-          </Button>
-        </CardFooter>
+        {!user ? (
+          <>
+            {" "}
+            <CardFooter>
+              <Button className="w-full bg-[#e5e7eb] text-black hover:bg-[#d1d5db]">
+                <div
+                  className="flex items-center justify-center gap-2"
+                  onClick={() => navigate("/sign-in")}
+                >
+                  <span>Sign In</span>
+                  <span>
+                    <MoveRight />
+                  </span>
+                </div>
+              </Button>
+            </CardFooter>
+          </>
+        ) : null}
       </Card>
     );
   }
@@ -138,9 +149,11 @@ function Pricing() {
           <Button className="w-full bg-[#ef4444] text-white hover:bg-[#ef4444]">
             <div
               className="flex items-center justify-center gap-2"
-              onClick={() => navigate("/sign-up")}
+              onClick={() =>
+                user ? navigate("/stripe") : navigate("/sign-in")
+              }
             >
-              <span className="text-white">Sign Up</span>
+              <span className="text-white">Upgrade</span>
               <span>
                 <MoveRight />
               </span>

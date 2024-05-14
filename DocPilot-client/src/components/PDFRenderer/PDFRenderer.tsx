@@ -41,7 +41,7 @@ const PDFRenderer = ({ pdfData }: any) => {
           <div className="flex items-center gap-1.5">
             <Input
               className="w-12 h-8"
-              value={currentPage}
+              value={currentPage ? currentPage : 1}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 const pageNumber = parseInt(e.target.value);
                 if (
@@ -101,7 +101,7 @@ const PDFRenderer = ({ pdfData }: any) => {
             />
           </Document>
           <p>
-            Page {currentPage} of {numPages}
+            Page {currentPage ? currentPage : 1} of {numPages}
           </p>
         </div>
       </div>

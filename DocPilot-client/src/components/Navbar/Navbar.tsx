@@ -40,10 +40,31 @@ const Navbar = () => {
           </Button>
         </div>
 
-        <div className="sm:hidden px-2">
-          <Button onClick={() => setShowMenu(!showMenu)}>
-            <Menu />
-          </Button>
+        <div
+          className="sm:hidden px-2 hover:cursor-pointer"
+          onClick={() => setShowMenu(!showMenu)}
+        >
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Menu />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-48">
+              <DropdownMenuItem onClick={() => navigate("/dashboard")}>
+                <Gauge className="mr-2 h-4 w-4" />
+                <span>Dashboard</span>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => navigate("/pricing")}>
+                <Gem className="mr-2 h-4 w-4" />
+                <span>Pricing</span>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={handleLogout}>
+                <LogOut className="mr-2 h-4 w-4" />
+                <span>Log out</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
 
         {user ? (
@@ -62,6 +83,7 @@ const Navbar = () => {
                     <Gauge className="mr-2 h-4 w-4" />
                     <span>Dashboard</span>
                   </DropdownMenuItem>
+                  <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={() => navigate("/pricing")}>
                     <Gem className="mr-2 h-4 w-4" />
                     <span>Pricing</span>

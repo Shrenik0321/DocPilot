@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const UploadDropzone = () => {
   const [isUploading, setIsUploading] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState("");
   const [uploadProgress, setUploadProgress] = React.useState(0);
   const navigate = useNavigate();
 
@@ -31,6 +32,14 @@ const UploadDropzone = () => {
     const formData = new FormData();
     formData.append("file", acceptedFiles[0]);
 
+    const fileSize = acceptedFiles[0].size;
+
+    if (fileSize > 4 * 1024 * 1024) {
+      setIsUploading(false);
+      setErrorMessage("File Size Exceeded 4MB limit.");
+      return;
+    }
+
     try {
       const response = await uploadFile(formData);
       if (progressInterval && response?.status === 200) {
@@ -39,7 +48,8 @@ const UploadDropzone = () => {
         navigate("/chat", { state: { data: response.data.data } });
       }
     } catch (error) {
-      console.error("Error uploading file:", error);
+      setErrorMessage("Error uploading file.");
+      console.error(error);
     } finally {
       setIsUploading(false);
     }
@@ -86,7 +96,11 @@ const UploadDropzone = () => {
                       className="w-full h-1 bg-zinc-100 text-[#ef4444]"
                     />
                   </div>
-                ) : null}
+                ) : (
+                  <div className="text-[#ef4444] text-sm p-2">
+                    <p>{errorMessage}</p>
+                  </div>
+                )}
               </label>
             </div>
           </div>
