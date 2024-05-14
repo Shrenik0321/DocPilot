@@ -76,7 +76,7 @@ function ChatWrapper() {
   }, [messages, shouldUpdateMessages]);
 
   return (
-    <Card className="flex flex-col sm:h-full justify-between">
+    <Card className="flex flex-col justify-between h-full">
       <CardHeader className="flex flex-row items-center">
         <div className="flex items-center space-x-4">
           <Avatar>
