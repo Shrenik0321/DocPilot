@@ -13,6 +13,8 @@ import { chatApi } from "@/api/chatApi";
 import { BotMessageSquare } from "lucide-react";
 import { User } from "lucide-react";
 import { MessageSquare } from "lucide-react";
+import { Mic } from "lucide-react";
+// import { MicOff } from "lucide-react";
 
 function ChatWrapper() {
   const [messages, setMessages] = React.useState<any>([]);
@@ -173,8 +175,18 @@ function ChatWrapper() {
             className="bg-[#ef4444]"
           >
             <Send className="h-4 w-4" />
-            <span className="sr-only">Send</span>
           </Button>
+
+          <Button type="submit" size="icon" className="bg-[#ef4444]">
+            <Mic className="h-4 w-4" />
+          </Button>
+          {/* <div>
+            <p>Microphone: {listening ? "on" : "off"}</p>
+            <button onClick={SpeechRecognition.startListening}>Start</button>
+            <button onClick={SpeechRecognition.stopListening}>Stop</button>
+            <button onClick={resetTranscript}>Reset</button>
+            <p>{transcript}</p>
+          </div> */}
         </form>
       </CardFooter>
     </Card>
