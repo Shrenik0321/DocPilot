@@ -14,13 +14,20 @@ import { BotMessageSquare } from "lucide-react";
 import { User } from "lucide-react";
 import { MessageSquare } from "lucide-react";
 import { Mic } from "lucide-react";
-// import { MicOff } from "lucide-react";
+import { useSpeechRecognition, useSpeechSynthesis } from "react-speech-kit";
+import { Volume1 } from "lucide-react";
 
 function ChatWrapper() {
   const [messages, setMessages] = React.useState<any>([]);
   const [input, setInput] = React.useState("");
   const [shouldUpdateMessages, setShouldUpdateMessages] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const { speak } = useSpeechSynthesis();
+  const { listen, listening, stop } = useSpeechRecognition({
+    onResult: (result: any) => {
+      setInput(result);
+    },
+  });
 
   const inputLength = input.trim().length;
 
@@ -119,6 +126,12 @@ function ChatWrapper() {
                         {message.time}
                       </div>
                     </div>
+                    <div
+                      className="bg-[#d1d5db] w-6 h-6 flex items-center justify-center rounded-sm self-start"
+                      onClick={() => speak({ text: message.content })}
+                    >
+                      <Volume1 className="h-4 w-4 text-white" />
+                    </div>
                   </div>
                 ) : (
                   <div className="flex flex-row items-end gap-1">
@@ -130,6 +143,12 @@ function ChatWrapper() {
                       <div className="text-xs text-primary-foreground opacity-50 text-right">
                         {message.time}
                       </div>
+                    </div>
+                    <div
+                      className="bg-[#d1d5db] w-6 h-6 flex items-center justify-center rounded-sm self-start"
+                      onClick={() => speak({ text: message.content })}
+                    >
+                      <Volume1 className="h-4 w-4 text-white" />
                     </div>
                   </div>
                 )}
@@ -166,7 +185,9 @@ function ChatWrapper() {
             className="flex-1"
             autoComplete="off"
             value={input}
-            onChange={(event) => setInput(event.target.value)}
+            onChange={(event) => {
+              setInput(event.target.value);
+            }}
           />
           <Button
             type="submit"
@@ -177,16 +198,27 @@ function ChatWrapper() {
             <Send className="h-4 w-4" />
           </Button>
 
-          <Button type="submit" size="icon" className="bg-[#ef4444]">
-            <Mic className="h-4 w-4" />
-          </Button>
-          {/* <div>
-            <p>Microphone: {listening ? "on" : "off"}</p>
-            <button onClick={SpeechRecognition.startListening}>Start</button>
-            <button onClick={SpeechRecognition.stopListening}>Stop</button>
-            <button onClick={resetTranscript}>Reset</button>
-            <p>{transcript}</p>
-          </div> */}
+          {listening ? (
+            <Button
+              type="button"
+              size="icon"
+              className="bg-[#ef4444] hover:bg-[#ef4444]"
+              onMouseDown={listen}
+              onMouseUp={stop}
+            >
+              <Loader className="animate-spin" />
+            </Button>
+          ) : (
+            <Button
+              type="button"
+              size="icon"
+              className="bg-[#ef4444] hover:bg-[#ef4444]"
+              onMouseDown={listen}
+              onMouseUp={stop}
+            >
+              <Mic className="h-4 w-4" />
+            </Button>
+          )}
         </form>
       </CardFooter>
     </Card>
