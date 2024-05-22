@@ -31,8 +31,14 @@ const SignIn = () => {
     // setIsLoading(true);
     try {
       const response = await userLogin(data);
+
+      const responseDataWithExpiry = {
+        ...response.data,
+        expiry: new Date().getTime() + 24 * 60 * 60 * 1000,
+      };
+
       if (response) {
-        localStorage.setItem("user", JSON.stringify(response.data));
+        localStorage.setItem("user", JSON.stringify(responseDataWithExpiry));
         toast.success(`User login successful!`, {
           autoClose: 2000,
           onClose: () => {
